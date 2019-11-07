@@ -31,7 +31,11 @@ export default new Vuex.Store({
         test: "https://testnet.bitmex.com",
         main: "https://www.bitmex.com"
       },
-      unit: "sats"
+      unit: "sats",
+      refresh: 30000,
+      loadingBalance: false,
+      loadingFunding: false,
+      loadingPosition: false
     },
     balance: {}
   },
@@ -41,22 +45,27 @@ export default new Vuex.Store({
     },
     updateBalance(state, payload) {
       state.balance = payload;
+      state.loadingBalance = false;
     },
     updateFunding(state, payload) {
       state.funding = payload;
+      state.loadingFunding = false;
     },
     updatePosition(state, payload) {
       state.position = payload;
+      state.loadingPosition = false;
     }
   },
   actions: {
     async fetchBalance({ state, commit }) {
       let exchange = bitmex(state);
+      state.loadingBalance = true;
       let balance = await exchange.fetchBalance();
       commit("updateBalance", balance.info[0]);
     },
     async fetchFunding({ state, commit }) {
       let exchange = bitmex(state);
+      state.loadingFunding = true;
       let funding = await exchange.publicGetInstrument({
         filter: {
           state: "Open"
@@ -67,6 +76,7 @@ export default new Vuex.Store({
     },
     async fetchPosition({ state, commit }) {
       let exchange = bitmex(state);
+      state.loadingPosition = true;
       let positions = await exchange.privateGetPosition({
         filter: {
           isOpen: true,

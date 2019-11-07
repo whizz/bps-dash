@@ -2,6 +2,8 @@
   <v-card class="ma-3">
     <v-toolbar color="primary" dark flat>
       <v-toolbar-title>Position</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-progress-circular indeterminate v-if="loading"></v-progress-circular>
     </v-toolbar>
     <v-card-text>
       <v-container>
@@ -45,8 +47,19 @@ export default {
     avgCost: state => state.position.avgCostPrice,
     lastPrice: state => state.position.lastPrice,
     liqPrice: state => state.position.liquidationPrice,
-    safetyMargin: state => (state.position.liquidationPrice / state.position.lastPrice) - 1
-  })
+    safetyMargin: state =>
+      state.position.liquidationPrice / state.position.lastPrice - 1,
+    loading: state => state.loadingPosition
+  }),
+  created() {
+    this.update();
+  },
+  methods: {
+    update() {
+      this.$store.dispatch("fetchPosition");
+      setTimeout(this.update, this.$store.state.settings.refresh);
+    }
+  }
 };
 </script>
 

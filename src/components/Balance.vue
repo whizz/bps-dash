@@ -2,9 +2,11 @@
   <v-card class="ma-3">
     <v-toolbar color="primary" dark flat>
       <v-toolbar-title>BitMEX Balance</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-progress-circular indeterminate v-if="loading"></v-progress-circular>
     </v-toolbar>
     <v-card-text>
-      <v-container >
+      <v-container>
         <v-row dense>
           <v-col cols="6">Wallet Balance</v-col>
           <v-col cols="6" class="text-right">{{ walletBalance | satsformat }}</v-col>
@@ -40,8 +42,18 @@ export default {
     unrealisedPNL: state => state.balance.unrealisedPnl,
     marginBalance: state => state.balance.marginBalance,
     positionMargin: state => state.balance.maintMargin,
-    availableBalance: state => state.balance.availableMargin
-  })
+    availableBalance: state => state.balance.availableMargin,
+    loading: state => state.loadingBalance
+  }),
+  created() {
+    this.update();
+  },
+  methods: {
+    update() {
+      this.$store.dispatch("fetchBalance");
+      setTimeout(this.update, this.$store.state.settings.refresh);
+    }
+  }
 };
 </script>
 

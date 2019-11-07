@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-btn @click="fetch()">Fetch</v-btn>
+    <v-btn @click="fetch()">Refresh</v-btn>
     <v-layout row wrap>
       <v-flex xs12 md6 lg4>
         <balance></balance>

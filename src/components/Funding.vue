@@ -2,6 +2,8 @@
   <v-card class="ma-3">
     <v-toolbar color="primary" dark flat>
       <v-toolbar-title>Funding</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-progress-circular indeterminate v-if="loading"></v-progress-circular>
     </v-toolbar>
     <v-card-text>
       <v-container>
@@ -10,7 +12,7 @@
           <v-col cols="6" class="text-right">{{ fundingRate | pctformat }}</v-col>
         </v-row>
         <v-row dense>
-          <v-col cols="6"> - translates to approx</v-col>
+          <v-col cols="6">- translates to approx</v-col>
           <v-col cols="6" class="text-right">{{ fundingRatePA | pctformat }} p.a.</v-col>
         </v-row>
         <v-row dense>
@@ -37,11 +39,22 @@ export default {
   name: "Funding",
   computed: mapState({
     fundingRate: state => state.funding.fundingRate,
-    fundingRatePA: state => state.funding.fundingRate*3*365,
+    fundingRatePA: state => state.funding.fundingRate * 3 * 365,
     fundingTime: state => state.funding.fundingTimestamp,
-    positionFunding: state => Math.round(state.position.markValue*state.funding.fundingRate),
-    fundingNext: state => state.funding.indicativeFundingRate
-  })
+    positionFunding: state =>
+      Math.round(state.position.markValue * state.funding.fundingRate),
+    fundingNext: state => state.funding.indicativeFundingRate,
+    loading: state => state.loadingFunding
+  }),
+  created() {
+    this.update();
+  },
+  methods: {
+    update() {
+      this.$store.dispatch("fetchFunding");
+      setTimeout(this.update, this.$store.state.settings.refresh);
+    }
+  }
 };
 </script>
 

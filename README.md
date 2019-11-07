@@ -28,8 +28,9 @@ The tool is inteded to be used locally, due to the sensitive nature of data it h
 
   It will listen on port 8081 and settings are pre-filled with this proxy address. The proxy uses [CORS Anywhere](https://github.com/Rob--W/cors-anywhere/), where you can find a lot more info.
 - Go to the [settings page](settings) and enter the key and secret there.
-- Return to the Dashboard, hit FETCH and you should see your info pulled from BitMEX.
+- Return to the Dashboard, hit REFRESH and you should see your info pulled from BitMEX.
 - Check the Javascript console in case it does not work.
+- The dasboard will auto update every 30 seconds.
 
 ## Author
 

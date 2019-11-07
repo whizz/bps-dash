@@ -4,6 +4,10 @@ This tool can be used to monitor your position when you are using BitMEX Perpetu
 
 It's fairly experimental, though I use it myself. I am a really bad developer, mind you.
 
+## Security
+
+The tool is inteded to be used locally, due to the sensitive nature of data it handles. Although it does not send anything anywhere other than the BitMEX API, you should not trust me on that. You should inspect the source code, ideally, so that you'll understand what it does.
+
 ## How to use
 
 - Generate a read-only API key and secret on the BitMEX website.

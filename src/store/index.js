@@ -32,12 +32,17 @@ export default new Vuex.Store({
         main: "https://www.bitmex.com"
       },
       unit: "sats",
-      refresh: 30000,
-      loadingBalance: false,
-      loadingFunding: false,
-      loadingPosition: false
+      refresh: 60000
     },
-    balance: {}
+    loadingStatus: {
+      Balance: "idle",
+      Funding: "idle",
+      Position: "idle"
+    },
+    balance: {},
+    funding: {},
+    position: {},
+    havePosition: false
   },
   mutations: {
     updateSetting(state, payload) {
@@ -45,45 +50,69 @@ export default new Vuex.Store({
     },
     updateBalance(state, payload) {
       state.balance = payload;
-      state.loadingBalance = false;
     },
     updateFunding(state, payload) {
       state.funding = payload;
-      state.loadingFunding = false;
     },
     updatePosition(state, payload) {
       state.position = payload;
-      state.loadingPosition = false;
+      state.havePosition = payload ? true : false;
+    },
+    startLoading(state, component) {
+      state.loadingStatus[component] = "loading";
+    },
+    stopLoading(state, component) {
+      state.loadingStatus[component] = "idle";
+    },
+    errorLoading(state, component) {
+      state.loadingStatus[component] = "error";
     }
   },
   actions: {
     async fetchBalance({ state, commit }) {
       let exchange = bitmex(state);
-      state.loadingBalance = true;
-      let balance = await exchange.fetchBalance();
-      commit("updateBalance", balance.info[0]);
+      const component = "Balance";
+      commit("startLoading", component);
+      try {
+        let balance = await exchange.fetchBalance();
+        commit("stopLoading", component);
+        commit("updateBalance", balance.info[0]);
+      } catch (e) {
+        commit("errorLoading", component);
+      }
     },
     async fetchFunding({ state, commit }) {
       let exchange = bitmex(state);
-      state.loadingFunding = true;
-      let funding = await exchange.publicGetInstrument({
-        filter: {
-          state: "Open"
-        },
-        symbol: "XBTUSD"
-      });
-      commit("updateFunding", funding[0]);
+      const component = "Funding";
+      commit("startLoading", component);
+      try {
+        let funding = await exchange.publicGetInstrument({
+          filter: {
+            state: "Open"
+          },
+          symbol: "XBTUSD"
+        });
+        commit("stopLoading", component);
+        commit("updateFunding", funding[0]);
+      } catch (e) {
+        commit("errorLoading", component);
+      }
     },
     async fetchPosition({ state, commit }) {
       let exchange = bitmex(state);
-      state.loadingPosition = true;
-      let positions = await exchange.privateGetPosition({
-        filter: {
-          isOpen: true,
-          symbol: "XBTUSD"
-        }
-      });
-      commit("updatePosition", positions[0]);
+      const component = "Position";
+      try {
+        let positions = await exchange.privateGetPosition({
+          filter: {
+            isOpen: true,
+            symbol: "XBTUSD"
+          }
+        });
+        commit("stopLoading", component);
+        commit("updatePosition", positions.length>=0 ? positions[0] : null);
+      } catch (e) {
+        commit("errorLoading", component);
+      }
     }
   },
   modules: {},

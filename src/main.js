@@ -7,16 +7,22 @@ import "@babel/polyfill";
 
 Vue.config.productionTip = false;
 
+// define custom filters for formatting
 Vue.filter("satsformat", function(value) {
   if (!value) return "";
-  let r = new Intl.NumberFormat("en-US", { style: "decimal" }).format(value);
+  let r = new Intl.NumberFormat("en-US", {
+    notation: "compact"
+  }).format(value);
   r = r + " " + store.state.settings.unit;
   return r;
 });
 
 Vue.filter("usdformat", function(value) {
   if (!value) return "";
-  let r = new Intl.NumberFormat("en-US", { style: "currency", "currency": "USD" }).format(value);
+  let r = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(value);
   return r;
 });
 

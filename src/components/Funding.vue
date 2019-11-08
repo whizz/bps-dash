@@ -3,7 +3,8 @@
     <v-toolbar color="primary" dark flat>
       <v-toolbar-title>Funding</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-progress-circular indeterminate v-if="loading"></v-progress-circular>
+      <v-progress-circular indeterminate v-if="status === 'loading'"></v-progress-circular>
+      <v-icon v-if="status === 'error'">mdi-alert-circle-outline</v-icon>
     </v-toolbar>
     <v-card-text>
       <v-container>
@@ -41,10 +42,14 @@ export default {
     fundingRate: state => state.funding.fundingRate,
     fundingRatePA: state => state.funding.fundingRate * 3 * 365,
     fundingTime: state => state.funding.fundingTimestamp,
-    positionFunding: state =>
-      Math.round(state.position.markValue * state.funding.fundingRate),
+    positionFunding: state => {
+      if (state.havePosition)
+        return Math.round(state.position.markValue * state.funding.fundingRate);
+      else
+        return 0;
+    },
     fundingNext: state => state.funding.indicativeFundingRate,
-    loading: state => state.loadingFunding
+    status: state => state.loadingStatus.Funding
   }),
   created() {
     this.update();

@@ -3,7 +3,8 @@
     <v-toolbar color="primary" dark flat>
       <v-toolbar-title>BitMEX Balance</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-progress-circular indeterminate v-if="loading"></v-progress-circular>
+      <v-progress-circular indeterminate v-if="status === 'loading'"></v-progress-circular>
+      <v-icon v-if="status === 'error'">mdi-alert-circle-outline</v-icon>
     </v-toolbar>
     <v-card-text>
       <v-container>
@@ -43,7 +44,7 @@ export default {
     marginBalance: state => state.balance.marginBalance,
     positionMargin: state => state.balance.maintMargin,
     availableBalance: state => state.balance.availableMargin,
-    loading: state => state.loadingBalance
+    status: state => state.loadingStatus.Balance
   }),
   created() {
     this.update();

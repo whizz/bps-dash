@@ -1,6 +1,6 @@
 # BitMEX Perpetual Swap Dashboard
 
-This tool can be used to monitor your position when you are using BitMEX Perpetual Swap to hedge against Bitcoin price fluctuations.
+This tool can be used to monitor your position when you are using [BitMEX](https://www.bitmex.com/register/wJ5Z4a) Perpetual Swap to hedge against Bitcoin price fluctuations. For more details, [read my article](https://taborsky.cz/posts/2019/hedging-bitcoin-volatility/).
 
 It's fairly experimental, though I use it myself. I am a really bad developer, mind you.
 

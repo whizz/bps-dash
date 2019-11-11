@@ -1,6 +1,7 @@
 <template>
   <v-container class="md-3">
     <h1>BitMEX Perpetual Swap Dashboard</h1>
+    <p>This is an open-source project hosted at <a href="https://gitlab.com/whizz/bps-dash">gitlab.com/whizz/bps-dash</a>, feel free to fork it and submit improvements.
     <p>This tool can be used to monitor your position when you are using BitMEX Perpetual Swap to hedge against Bitcoin price fluctuations.</p>
     <p>It's fairly experimental, though I use it myself. I am a really bad developer, mind you.</p>
     <h2>How to use</h2>

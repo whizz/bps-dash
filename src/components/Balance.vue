@@ -38,6 +38,11 @@ import { mapState } from "vuex";
 
 export default {
   name: "Balance",
+  data() {
+    return {
+      timer: ""
+    };
+  },
   computed: mapState({
     walletBalance: state => state.balance.walletBalance,
     unrealisedPNL: state => state.balance.unrealisedPnl,
@@ -48,12 +53,15 @@ export default {
   }),
   created() {
     this.update();
+    this.timer = setInterval(this.update, this.$store.state.settings.refresh);
   },
   methods: {
     update() {
       this.$store.dispatch("fetchBalance");
-      setTimeout(this.update, this.$store.state.settings.refresh);
     }
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   }
 };
 </script>

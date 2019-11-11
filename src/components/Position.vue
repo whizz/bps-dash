@@ -45,6 +45,11 @@ import { mapState } from "vuex";
 
 export default {
   name: "Position",
+    data() {
+    return {
+      timer: ""
+    };
+  },
   computed: mapState({
     sizeUSD: state => state.position.currentQty,
     sizeBTC: state => state.position.posCost,
@@ -58,12 +63,15 @@ export default {
   }),
   created() {
     this.update();
+    this.timer = setInterval(this.update, this.$store.state.settings.refresh);
   },
   methods: {
     update() {
       this.$store.dispatch("fetchPosition");
-      setTimeout(this.update, this.$store.state.settings.refresh);
     }
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   }
 };
 </script>

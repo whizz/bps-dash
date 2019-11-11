@@ -38,6 +38,11 @@ import { mapState } from "vuex";
 
 export default {
   name: "Funding",
+  data() {
+    return {
+      timer: ""
+    };
+  },
   computed: mapState({
     fundingRate: state => state.funding.fundingRate,
     fundingRatePA: state => state.funding.fundingRate * 3 * 365,
@@ -53,12 +58,15 @@ export default {
   }),
   created() {
     this.update();
+    this.timer = setInterval(this.update, this.$store.state.settings.refresh);
   },
   methods: {
     update() {
       this.$store.dispatch("fetchFunding");
-      setTimeout(this.update, this.$store.state.settings.refresh);
     }
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
   }
 };
 </script>

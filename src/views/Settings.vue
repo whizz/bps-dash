@@ -9,11 +9,19 @@
           <v-card-text>
             <v-form ref="form">
               <v-text-field v-model="bitmexKey" label="API Key"></v-text-field>
-              <v-text-field v-model="bitmexSecret" label="API Secret"></v-text-field>
+              <v-text-field
+                v-model="bitmexSecret"
+                label="API Secret"
+              ></v-text-field>
               <v-text-field v-model="proxy" label="CORS proxy"></v-text-field>
               <v-radio-group v-model="net">
                 <v-radio label="Testnet" value="test"></v-radio>
                 <v-radio label="Mainnet" value="main"></v-radio>
+              </v-radio-group>
+              Unit
+              <v-radio-group v-model="unit">
+                <v-radio label="sats" value="sats"></v-radio>
+                <v-radio label="BTC" value="BTC"></v-radio>
               </v-radio-group>
             </v-form>
           </v-card-text>
@@ -57,6 +65,14 @@ export default {
       },
       set(value) {
         this.$store.commit("updateSetting", { key: "proxy", value });
+      }
+    },
+    unit: {
+      get() {
+        return this.$store.state.settings.unit;
+      },
+      set(value) {
+        this.$store.commit("updateSetting", { key: "unit", value });
       }
     }
   }

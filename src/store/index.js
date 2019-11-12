@@ -101,6 +101,7 @@ export default new Vuex.Store({
     async fetchPosition({ state, commit }) {
       let exchange = bitmex(state);
       const component = "Position";
+      commit("startLoading", component);
       try {
         let positions = await exchange.privateGetPosition({
           filter: {

@@ -1,24 +1,17 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import VuexPersistence from "vuex-persist";
-import ccxt from "ccxt";
+import {
+  bitmexFetchBalance,
+  bitmexFetchFunding,
+  bitmexFetchPosition
+} from "./bitmex";
 
 Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
 });
-
-function bitmex(state) {
-  let options = {
-    apiKey: state.settings.bitmexKey,
-    secret: state.settings.bitmexSecret
-  };
-  let exchange = new ccxt.bitmex(options);
-  exchange.urls["api"] = state.settings.urls[state.settings.net];
-  exchange.proxy = state.settings.proxy;
-  return exchange;
-}
 
 export default new Vuex.Store({
   state: {
@@ -70,47 +63,34 @@ export default new Vuex.Store({
   },
   actions: {
     async fetchBalance({ state, commit }) {
-      let exchange = bitmex(state);
       const component = "Balance";
       commit("startLoading", component);
       try {
-        let balance = await exchange.fetchBalance();
+        let balance = await bitmexFetchBalance(state);
         commit("stopLoading", component);
-        commit("updateBalance", balance.info[0]);
+        commit("updateBalance", balance);
       } catch (e) {
         commit("errorLoading", component);
       }
     },
     async fetchFunding({ state, commit }) {
-      let exchange = bitmex(state);
       const component = "Funding";
       commit("startLoading", component);
       try {
-        let funding = await exchange.publicGetInstrument({
-          filter: {
-            state: "Open"
-          },
-          symbol: "XBTUSD"
-        });
+        let funding = await bitmexFetchFunding(state);
         commit("stopLoading", component);
-        commit("updateFunding", funding[0]);
+        commit("updateFunding", funding);
       } catch (e) {
         commit("errorLoading", component);
       }
     },
     async fetchPosition({ state, commit }) {
-      let exchange = bitmex(state);
       const component = "Position";
       commit("startLoading", component);
       try {
-        let positions = await exchange.privateGetPosition({
-          filter: {
-            isOpen: true,
-            symbol: "XBTUSD"
-          }
-        });
+        let position = await bitmexFetchPosition(state);
         commit("stopLoading", component);
-        commit("updatePosition", positions.length>=0 ? positions[0] : null);
+        commit("updatePosition", position || null);
       } catch (e) {
         commit("errorLoading", component);
       }

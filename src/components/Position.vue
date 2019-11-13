@@ -3,7 +3,10 @@
     <v-toolbar color="primary" dark flat>
       <v-toolbar-title>Position</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-progress-circular indeterminate v-if="status === 'loading'"></v-progress-circular>
+      <v-progress-circular
+        indeterminate
+        v-if="status === 'loading'"
+      ></v-progress-circular>
       <v-icon v-if="status === 'error'">mdi-alert-circle-outline</v-icon>
     </v-toolbar>
     <v-card-text>
@@ -30,7 +33,9 @@
         </v-row>
         <v-row dense>
           <v-col cols="6">Safety margin</v-col>
-          <v-col cols="6" class="text-right">{{ safetyMargin | pctformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            safetyMargin | pctformat
+          }}</v-col>
         </v-row>
       </v-container>
       <v-container v-if="!havePosition">
@@ -45,7 +50,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "Position",
-    data() {
+  data() {
     return {
       timer: ""
     };
@@ -76,5 +81,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

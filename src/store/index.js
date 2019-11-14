@@ -27,11 +27,13 @@ export default new Vuex.Store({
     loadingStatus: {
       Balance: "idle",
       Funding: "idle",
-      Position: "idle"
+      Position: "idle",
+      WalletHistory: "idle"
     },
     balance: {},
     funding: {},
     position: {},
+    walletHistory: [],
     havePosition: false
   },
   mutations,

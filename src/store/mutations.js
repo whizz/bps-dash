@@ -17,6 +17,10 @@ export default {
     state.havePosition = payload ? true : false;
   },
 
+  updateWalletHistory(state, payload) {
+      state.walletHistory = payload;
+  },
+  
   startLoading(state, component) {
     state.loadingStatus[component] = "loading";
   },
@@ -24,7 +28,7 @@ export default {
   stopLoading(state, component) {
     state.loadingStatus[component] = "idle";
   },
-  
+
   errorLoading(state, component) {
     state.loadingStatus[component] = "error";
   }

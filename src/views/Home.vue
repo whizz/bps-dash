@@ -11,6 +11,9 @@
       <v-flex xs12 md6 lg4>
         <position></position>
       </v-flex>
+      <v-flex xs12 md6 lg4>
+        <walletHistory></walletHistory>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -19,13 +22,15 @@
 import Balance from "@/components/Balance";
 import Funding from "@/components/Funding";
 import Position from "@/components/Position";
+import WalletHistory from "@/components/WalletHistory";
 
 export default {
   name: "home",
   components: {
     Balance,
     Funding,
-    Position
+    Position,
+    WalletHistory
   },
   methods: {
     fetch() {

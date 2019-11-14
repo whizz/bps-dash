@@ -55,6 +55,13 @@ Vue.filter("timeformat", function(value) {
   return r;
 });
 
+Vue.filter("dateformat", function(value) {
+  if (!value) return "";
+  const r = new Intl.DateTimeFormat("default").format(new Date(value));
+  return r;
+});
+
+
 new Vue({
   router,
   store,

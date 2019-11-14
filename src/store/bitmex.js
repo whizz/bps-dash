@@ -54,3 +54,14 @@ export async function bitmexFetchPosition(state) {
     return result[0];
     
 }
+
+export async function bitmexFetchWalletHistory(state) {
+    let result = await execute(
+      state,
+      "GET",
+      "user/walletHistory"
+    );
+    return result.filter(function(row) {
+        return row.transactType === "RealisedPNL";
+    });
+}

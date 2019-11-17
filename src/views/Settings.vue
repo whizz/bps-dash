@@ -14,15 +14,15 @@
                 label="API Secret"
               ></v-text-field>
               <v-text-field v-model="proxy" label="CORS proxy"></v-text-field>
-              <v-radio-group v-model="net">
+              <v-radio-group v-model="net" lable="Network">
                 <v-radio label="Testnet" value="test"></v-radio>
                 <v-radio label="Mainnet" value="main"></v-radio>
               </v-radio-group>
-              Unit
-              <v-radio-group v-model="unit">
+              <v-radio-group v-model="unit" label="Unit">
                 <v-radio label="sats" value="sats"></v-radio>
                 <v-radio label="BTC" value="BTC"></v-radio>
               </v-radio-group>
+              <v-switch :label="`Dark Theme`" v-model="dark"></v-switch>
             </v-form>
           </v-card-text>
         </v-card>
@@ -73,6 +73,14 @@ export default {
       },
       set(value) {
         this.$store.commit("updateSetting", { key: "unit", value });
+      }
+    },
+    dark: {
+      get() {
+        return this.$store.state.settings.dark;
+      },
+      set(value) {
+        this.$store.commit("setDarkMode", value);
       }
     }
   }

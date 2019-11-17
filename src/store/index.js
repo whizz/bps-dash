@@ -22,7 +22,8 @@ export default new Vuex.Store({
         main: "https://www.bitmex.com"
       },
       unit: "sats",
-      refresh: 60000
+      refresh: 60000,
+      dark: true
     },
     loadingStatus: {
       Balance: "idle",

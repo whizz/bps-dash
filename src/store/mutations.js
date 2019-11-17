@@ -1,3 +1,5 @@
+import vuetify from "../plugins/vuetify";
+
 export default {
 
   updateSetting(state, payload) {
@@ -31,5 +33,10 @@ export default {
 
   errorLoading(state, component) {
     state.loadingStatus[component] = "error";
+  },
+
+  setDarkMode(state, darkMode) {
+    state.settings.dark = darkMode;
+    vuetify.framework.theme.dark = darkMode;
   }
 }

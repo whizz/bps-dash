@@ -1,6 +1,6 @@
 <template>
   <span>
-    <v-app-bar dark dense>
+    <v-app-bar dense>
       <v-toolbar-title>{{appTitle}}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon to="/">

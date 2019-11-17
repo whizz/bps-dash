@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-3">
-    <v-toolbar color="primary">
+    <v-toolbar>
       <v-toolbar-title>Funding</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-progress-circular indeterminate v-if="status === 'loading'"></v-progress-circular>

@@ -1,6 +1,6 @@
 <template>
   <v-card class="ma-3">
-    <v-toolbar color="primary">
+    <v-toolbar>
       <v-toolbar-title>Profits&amp;Losses</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-progress-circular

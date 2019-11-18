@@ -59,7 +59,7 @@ export async function bitmexFetchWalletHistory(state) {
     let result = await execute(
       state,
       "GET",
-      "user/walletHistory"
+      "user/walletHistory?count=10"
     );
     return result.filter(function(row) {
         return row.transactType === "RealisedPNL";

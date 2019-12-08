@@ -11,6 +11,7 @@ It's fairly experimental, though I use it myself. I am a really bad developer, m
 The tool is inteded to be used locally, due to the sensitive nature of data it handles. Although it does not send anything anywhere other than the BitMEX API, you should not trust me on that. You should inspect the source code, ideally, so that you'll understand what it does.
 
 ## How to use
+
 - Clone the repository to your drive.
 - Install dependencies by running:
     ```
@@ -33,6 +34,75 @@ The tool is inteded to be used locally, due to the sensitive nature of data it h
 - Return to the Dashboard, hit REFRESH and you should see your info pulled from BitMEX.
 - Check the Javascript console in case it does not work.
 - The dasboard will auto update every 30 seconds.
+
+## Server deployment
+
+If you wish to deploy on your personal server or for your friends, it can be done this way. The instructions assume you have node.js/npm installed on the machine, you run Apache and you are using a systemd init.
+
+Download and build the most recent version:
+
+```shell
+cd /opt
+git clone https://gitlab.com/whizz/bps-dash.git
+cd bps-dash
+npm install && npm run build
+```
+
+Next we'll setup the CORS Anywhere proxy to run on the server. Because we don't want to run an open proxy, we'll hide it behind a secret URL. I assume at this day and age you are running a HTTPS website. If not, stop right now and go fix that first.
+
+We'll create systemd service for the proxy. Create a file `/etc/systemd/system/cors-proxy.service` with following content:
+
+```ini
+[Unit]
+Description=CORS proxy
+After=network.target
+
+[Service]
+User=root
+Group=root
+ExecStart=/bin/npm run proxy
+WorkingDirectory=/opt/bps-dash
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Enable and start the proxy server:
+
+```shell
+systemctl enable cors-proxy
+systemctl start cors-proxy
+```
+
+At last, we'll configure Apache. This is the Apache config file template. Replace YOURDOMAIN with your hostname and SECRET with a randomly generated alpahumeric string of sufficient length, such as "Kf6sy7Fvd0". Add the config to your Apache server and reload it.
+
+```apache
+<VirtualHost *:443>
+    ServerName YOURDOMAIN
+    CustomLog /var/log/httpd/YOURDOMAIN.log combined
+    ErrorLog  /var/log/httpd/YOURDOMAIN-error.log
+    DocumentRoot /opt-bps-dash
+    <Directory /opt/bps-dash>
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+   ProxyPass /proxy/SECRET/ http://localhost:8081/
+   ProxyPassReverse /proxy/SECRET/ http://localhost:8081/
+
+   ; Your SSL config probably also goes here
+
+</VirtualHost>
+```
+
+After that, you can navigate to https://YOURDOMAIN and you should see the dashboard. Go to Settings, enter your API details and into the "CORS proxy" field, enter "https://YOURDOMAIN/proxy/SECRET/". When you return to the dashboard, the data should refresh and everything should work.
 
 ## Author
 

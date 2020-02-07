@@ -15,13 +15,15 @@
           <thead>
             <tr>
               <th class="text-left">Date</th>
-              <th class="text-left">Value</th>
+              <th class="text-left">Value BTC</th>
+              <th class="text-left">Value USD</th>              
             </tr>
           </thead>
           <tbody>
             <tr v-for="item in history" v-bind:key="item.transactID">
               <td>{{ item.timestamp | dateformat }}</td>
               <td class="text-right">{{ item.amount | satsformat }}</td>
+              <td class="text-right">{{ item.usdvalue | usdformat }}</td>
             </tr>
           </tbody>
         </template>

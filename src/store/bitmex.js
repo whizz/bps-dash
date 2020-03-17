@@ -4,7 +4,7 @@ import crypto from "crypto";
 async function execute(state, verb, method, data) {
   const expires = Math.round(new Date().getTime() / 1000) + 60;
   const path = "/api/v1/" + method;
-  const postBody = state==="GET" ? JSON.stringify(data) : "";
+  const postBody = state === "GET" ? JSON.stringify(data) : "";
 
   var signature = crypto
     .createHmac("sha256", state.settings.bitmexSecret)
@@ -37,31 +37,26 @@ export async function bitmexFetchBalance(state) {
 }
 
 export async function bitmexFetchFunding(state) {
-    let result = await execute(
-      state,
-      "GET",
-      "instrument?filter%5Bstate%5D=Open&symbol=XBTUSD"
-    );
-    return result[0];
+  let result = await execute(
+    state,
+    "GET",
+    "instrument?filter%5Bstate%5D=Open&symbol=XBTUSD"
+  );
+  return result[0];
 }
 
 export async function bitmexFetchPosition(state) {
-    let result = await execute(
-      state,
-      "GET",
-      "position?filter%5BisOpen%5D=true&filter%5Bsymbol%5D=XBTUSD"
-    );
-    return result[0];
-    
+  let result = await execute(
+    state,
+    "GET",
+    "position?filter%5BisOpen%5D=true&filter%5Bsymbol%5D=XBTUSD"
+  );
+  return result[0];
 }
 
 export async function bitmexFetchWalletHistory(state) {
-    let result = await execute(
-      state,
-      "GET",
-      "user/walletHistory?count=10"
-    );
-    return result.filter(function(row) {
-        return row.transactType === "RealisedPNL";
-    });
+  let result = await execute(state, "GET", "user/walletHistory?count=10");
+  return result.filter(function(row) {
+    return row.transactType === "RealisedPNL";
+  });
 }

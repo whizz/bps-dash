@@ -16,7 +16,7 @@
             <tr>
               <th class="text-left">Date</th>
               <th class="text-left">Value BTC</th>
-              <th class="text-left">Value USD</th>              
+              <th class="text-left">Value USD</th>
             </tr>
           </thead>
           <tbody>

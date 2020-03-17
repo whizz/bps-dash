@@ -3,30 +3,43 @@
     <v-toolbar>
       <v-toolbar-title>BitMEX Balance</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-progress-circular indeterminate v-if="status === 'loading'"></v-progress-circular>
+      <v-progress-circular
+        indeterminate
+        v-if="status === 'loading'"
+      ></v-progress-circular>
       <v-icon v-if="status === 'error'">mdi-alert-circle-outline</v-icon>
     </v-toolbar>
     <v-card-text>
       <v-container>
         <v-row dense>
           <v-col cols="6">Wallet Balance</v-col>
-          <v-col cols="6" class="text-right">{{ walletBalance | satsformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            walletBalance | satsformat
+          }}</v-col>
         </v-row>
         <v-row dense>
           <v-col cols="6">Unrealised gain/loss</v-col>
-          <v-col cols="6" class="text-right">{{ unrealisedPNL | satsformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            unrealisedPNL | satsformat
+          }}</v-col>
         </v-row>
         <v-row dense>
           <v-col cols="6">Margin Balance</v-col>
-          <v-col cols="6" class="text-right">{{ marginBalance | satsformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            marginBalance | satsformat
+          }}</v-col>
         </v-row>
         <v-row dense>
           <v-col cols="6">Position Margin</v-col>
-          <v-col cols="6" class="text-right">{{ positionMargin | satsformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            positionMargin | satsformat
+          }}</v-col>
         </v-row>
         <v-row dense>
           <v-col cols="6">Available Balance</v-col>
-          <v-col cols="6" class="text-right">{{ availableBalance | satsformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            availableBalance | satsformat
+          }}</v-col>
         </v-row>
       </v-container>
     </v-card-text>
@@ -66,5 +79,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

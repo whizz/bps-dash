@@ -3,30 +3,43 @@
     <v-toolbar>
       <v-toolbar-title>Funding</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-progress-circular indeterminate v-if="status === 'loading'"></v-progress-circular>
+      <v-progress-circular
+        indeterminate
+        v-if="status === 'loading'"
+      ></v-progress-circular>
       <v-icon v-if="status === 'error'">mdi-alert-circle-outline</v-icon>
     </v-toolbar>
     <v-card-text>
       <v-container>
         <v-row dense>
           <v-col cols="6">Current funding rate</v-col>
-          <v-col cols="6" class="text-right">{{ fundingRate | pctformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            fundingRate | pctformat
+          }}</v-col>
         </v-row>
         <v-row dense>
           <v-col cols="6">- translates to approx</v-col>
-          <v-col cols="6" class="text-right">{{ fundingRatePA | pctformat }} p.a.</v-col>
+          <v-col cols="6" class="text-right"
+            >{{ fundingRatePA | pctformat }} p.a.</v-col
+          >
         </v-row>
         <v-row dense>
           <v-col cols="6">Next funding at</v-col>
-          <v-col cols="6" class="text-right">{{ fundingTime | timeformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            fundingTime | timeformat
+          }}</v-col>
         </v-row>
         <v-row dense>
           <v-col cols="6">You'll earn</v-col>
-          <v-col cols="6" class="text-right">{{ positionFunding | satsformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            positionFunding | satsformat
+          }}</v-col>
         </v-row>
         <v-row dense>
           <v-col cols="6">Predicted next rate</v-col>
-          <v-col cols="6" class="text-right">{{ fundingNext | pctformat }}</v-col>
+          <v-col cols="6" class="text-right">{{
+            fundingNext | pctformat
+          }}</v-col>
         </v-row>
       </v-container>
     </v-card-text>
@@ -50,8 +63,7 @@ export default {
     positionFunding: state => {
       if (state.havePosition)
         return Math.round(state.position.markValue * state.funding.fundingRate);
-      else
-        return 0;
+      else return 0;
     },
     fundingNext: state => state.funding.indicativeFundingRate,
     status: state => state.loadingStatus.Funding
@@ -71,5 +83,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

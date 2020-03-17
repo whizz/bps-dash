@@ -1,7 +1,7 @@
 <template>
   <span>
     <v-app-bar dense>
-      <v-toolbar-title>{{appTitle}}</v-toolbar-title>
+      <v-toolbar-title>{{ appTitle }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon to="/">
         <v-icon>mdi-view-dashboard-outline</v-icon>
@@ -27,5 +27,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

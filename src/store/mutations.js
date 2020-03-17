@@ -1,7 +1,6 @@
 import vuetify from "../plugins/vuetify";
 
 export default {
-
   updateSetting(state, payload) {
     state.settings[payload.key] = payload.value;
   },
@@ -20,12 +19,13 @@ export default {
   },
 
   updateWalletHistory(state, payload) {
-      for (let i=0; i<payload.length; i++) {
-        payload[i].usdvalue = payload[i].amount / 100000000 * state.funding.lastPrice;
-      }
-      state.walletHistory = payload;
+    for (let i = 0; i < payload.length; i++) {
+      payload[i].usdvalue =
+        (payload[i].amount / 100000000) * state.funding.lastPrice;
+    }
+    state.walletHistory = payload;
   },
-  
+
   startLoading(state, component) {
     state.loadingStatus[component] = "loading";
   },
@@ -42,4 +42,4 @@ export default {
     state.settings.dark = darkMode;
     vuetify.framework.theme.dark = darkMode;
   }
-}
+};

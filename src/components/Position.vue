@@ -40,6 +40,10 @@
       </v-container>
       <v-container v-if="!havePosition">
         You have no open position
+        <v-row dense>
+          <v-col cols="6">Last price</v-col>
+          <v-col cols="6" class="text-right">{{ lastPrice | usdformat }}</v-col>
+        </v-row>
       </v-container>
     </v-card-text>
   </v-card>
@@ -59,7 +63,7 @@ export default {
     sizeUSD: state => state.position.currentQty,
     sizeBTC: state => state.position.posCost,
     avgCost: state => state.position.avgCostPrice,
-    lastPrice: state => state.position.lastPrice,
+    lastPrice: state => state.funding.lastPrice,
     liqPrice: state => state.position.liquidationPrice,
     safetyMargin: state =>
       state.position.liquidationPrice / state.position.lastPrice - 1,

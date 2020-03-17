@@ -21,7 +21,7 @@ export default {
 
   updateWalletHistory(state, payload) {
       for (let i=0; i<payload.length; i++) {
-        payload[i].usdvalue = payload[i].amount / 100000000 * state.position.lastPrice;
+        payload[i].usdvalue = payload[i].amount / 100000000 * state.funding.lastPrice;
       }
       state.walletHistory = payload;
   },

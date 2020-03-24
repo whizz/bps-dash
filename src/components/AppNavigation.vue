@@ -10,7 +10,7 @@
         <v-icon>mdi-information-outline</v-icon>
       </v-btn>
       <v-btn icon to="/settings">
-        <v-icon>mdi-settings-outline</v-icon>
+        <v-icon>mdi-cog-outline</v-icon>
       </v-btn>
     </v-app-bar>
   </span>

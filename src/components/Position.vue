@@ -66,7 +66,7 @@ export default {
     lastPrice: state => state.funding.lastPrice,
     liqPrice: state => state.position.liquidationPrice,
     safetyMargin: state =>
-      state.position.liquidationPrice / state.position.lastPrice - 1,
+      Math.abs(state.position.liquidationPrice / state.position.lastPrice - 1),
     status: state => state.loadingStatus.Position,
     havePosition: state => state.havePosition
   }),

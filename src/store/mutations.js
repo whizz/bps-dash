@@ -26,6 +26,10 @@ export default {
     state.walletHistory = payload;
   },
 
+  updateOrders(state, payload) {
+    state.orders = payload;
+  },
+
   startLoading(state, component) {
     state.loadingStatus[component] = "loading";
   },

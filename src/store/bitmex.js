@@ -60,3 +60,8 @@ export async function bitmexFetchWalletHistory(state) {
     return row.transactType === "RealisedPNL";
   });
 }
+
+export async function bitmexFetchOrders(state) {
+  let result = await execute(state, "GET", "order?count=10&reverse=true");
+  return result;
+}

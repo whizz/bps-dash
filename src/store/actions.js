@@ -2,7 +2,8 @@ import {
   bitmexFetchBalance,
   bitmexFetchFunding,
   bitmexFetchPosition,
-  bitmexFetchWalletHistory
+  bitmexFetchWalletHistory,
+  bitmexFetchOrders
 } from "./bitmex";
 
 export default {
@@ -49,6 +50,18 @@ export default {
       let history = await bitmexFetchWalletHistory(state);
       commit("stopLoading", component);
       commit("updateWalletHistory", history);
+    } catch (e) {
+      commit("errorLoading", component);
+    }
+  },
+
+  async fetchOrders({ state, commit }) {
+    const component = "Orders";
+    commit("startLoading", component);
+    try {
+      let orders = await bitmexFetchOrders(state);
+      commit("stopLoading", component);
+      commit("updateOrders", orders);
     } catch (e) {
       commit("errorLoading", component);
     }

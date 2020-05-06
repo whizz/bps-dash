@@ -24,6 +24,12 @@
           }}</v-col>
         </v-row>
         <v-row dense>
+          <v-col cols="6">Unrealised $</v-col>
+          <v-col cols="6" class="text-right">{{
+            unrealisedUSD | usdformat
+          }}</v-col>
+        </v-row>
+        <v-row dense>
           <v-col cols="6">Margin Balance</v-col>
           <v-col cols="6" class="text-right">{{
             marginBalance | satsformat
@@ -59,6 +65,8 @@ export default {
   computed: mapState({
     walletBalance: state => state.balance.walletBalance,
     unrealisedPNL: state => state.balance.unrealisedPnl,
+    unrealisedUSD: state =>
+      (state.funding.lastPrice * state.balance.unrealisedPnl) / 100000000,
     marginBalance: state => state.balance.marginBalance,
     positionMargin: state => state.balance.maintMargin,
     availableBalance: state => state.balance.availableMargin,

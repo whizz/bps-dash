@@ -16,7 +16,7 @@
     "request-promise-native": "^1.0.8",
     "vue": "^2.6.11",
     "vue-router": "^3.3.4",
-    "vuetify": "^2.3.4",
+    "vuetify": "^2.6.10",
     "vuex": "^3.5.1",
     "vuex-persist": "^2.2.0"
   },
